@@ -2,6 +2,8 @@ Package: perfi
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
+    person("Sophie", "Song", , "ssong25@smith.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
     person("Olivia", "Wang", , "owang@smith.edu", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
