@@ -7,6 +7,9 @@
 
 # read boa transaction data
 read_boa <- function(data_url, ...) {
-  data <- utils::read.csv(data_url, skip = 6)
+  # read csv
+  data <- utils::read.csv(data_url, skip = 5)
+  # drop unnecessary row
+  data <- data[-1,]
   return(data)
 }
