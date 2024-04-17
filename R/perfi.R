@@ -1,6 +1,7 @@
-#' @title Reading transaction spreadsheet and output personal finance statistics
+#' @title Reading transaction spreadsheet
 #' @description
-#' @importFrom utils read.csv dplyr mutate
+#' @importFrom utils read.csv
+#' @importFrom dplyr mutate
 #' @export
 #'
 #'
@@ -15,4 +16,19 @@ read_boa <- function(data_url, ...) {
   data <- data |>
     dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
   return(data)
+}
+
+
+#' @title Creating summary tables and visualizations of personal finance statistics
+#' @description
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @export
+
+summary_stats <- function(data, ...) {
+  total <- data |>
+    dplyr::group_by(Status) |>
+    dplyr::summarize(sum(Amount))
+  colnames(total) <- c("Status", "Total")
+  return(total)
 }
