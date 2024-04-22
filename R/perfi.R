@@ -44,7 +44,7 @@ avg_spend <- function(data, ...) {
   total_spd <- abs(sum(ifelse(data$Status == "Expenditure", data$Amount, NA), na.rm = TRUE))
   num_day <- as.numeric(difftime(max(data$Date), min(data$Date)))
   num_wk <- round(as.numeric(num_day/7), digits = 2)
-  avg <- data.frame("Average by" = c("Day", "Week"),
+  avg <- data.frame("Average_by" = c("Day", "Week"),
              "Spending" = c(round(total_spd/num_day, digits = 2), round(total_spd/num_wk, digits = 2))
   )
   return(avg)
