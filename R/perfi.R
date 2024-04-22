@@ -15,6 +15,8 @@ read_boa <- function(data_url, ...) {
   # create a column for expenditure, deposit
   data <- data |>
     dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
+  # converting date to Date format
+  data$Date <- as.Date(data$Date, "%m/%d/%y")
   return(data)
 }
 
@@ -32,3 +34,19 @@ summary_stats <- function(data, ...) {
   colnames(total) <- c("Status", "Total")
   return(total)
 }
+
+#' @title Calculating average spending (by day and week)
+#' @description
+#' @importFrom
+#' @export
+
+avg_spend <- function(data, ...) {
+  total_spd <- abs(sum(ifelse(data$Status == "Expenditure", data$Amount, NA), na.rm = TRUE))
+  num_day <- as.numeric(difftime(max(data$Date), min(data$Date)))
+  num_wk <- round(as.numeric(num_day/7), digits = 2)
+  avg <- data.frame("Average by" = c("Day", "Week"),
+             "Spending" = c(round(total_spd/num_day, digits = 2), round(total_spd/num_wk, digits = 2))
+  )
+  return(avg)
+}
+
