@@ -50,3 +50,11 @@ avg_spend <- function(data, ...) {
   return(avg)
 }
 
+#' @title Returns income budgeted for user
+#' @description
+#' @importFrom
+#' @export
+
+budget_income <- function(income, needs_percent, wants_percent, savings_percent,  freq = "bi-weekly"){
+
+}
