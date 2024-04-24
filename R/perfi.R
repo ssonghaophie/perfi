@@ -55,6 +55,14 @@ avg_spend <- function(data, ...) {
 #' @importFrom
 #' @export
 
-budget_income <- function(income, needs_percent, wants_percent, savings_percent,  freq = "bi-weekly"){
+budget_income <- function(income, needs_percent = .5, wants_percent = .3, savings_percent = .2,  freq = "bi-weekly"){
+  if (freq == "weekly"){
+    income <- income *2
+  }
+  needs <- income * needs_percent
+  wants <- income * wants_percent
+  savings <- income * savings_percent
 
+  budget <- list(needs = needs, wants = wants, savings = savings)
+  return(budget)
 }
