@@ -8,7 +8,6 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
      person("Rachel", "Tolentino", , "rtolentinog@smith.edu", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
