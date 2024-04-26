@@ -12,11 +12,40 @@ read_boa <- function(data_url, ...) {
   data <- utils::read.csv(data_url, skip = 5)
   # drop unnecessary row, column
   data <- data[-1, -4]
+  # converting date to Date format
+  data$Date <- as.Date(data$Date, "%m/%d/%y")
   # create a column for expenditure, deposit
   data <- data |>
     dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
-  # converting date to Date format
-  data$Date <- as.Date(data$Date, "%m/%d/%y")
+  # create categories
+  data <- data |>
+    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE))
+  data <- data |>
+    dplyr::mutate(Category =
+                    # Transaction
+                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
+
+                    # Pharmacy
+                    ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
+
+                    # Grocery
+                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
+
+                    # Transportation
+                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
+
+                    # Food
+                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|T. Roots|Noodles|Oriental Taste|
+CHIPOTLE|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
+
+                    # Clothes
+                    ifelse(grepl("URBAN OUTFITTERS|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
+
+                    # Shopping
+                    ifelse(grepl("BLUE BOTTLE COFFEE|BOOKSHOP|THE ROOST|MOCHINUT|HUI LAO SHAN|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
+
+                    Desc))))))))
+
   return(data)
 }
 
