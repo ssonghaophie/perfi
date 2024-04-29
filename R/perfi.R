@@ -119,7 +119,7 @@ read_USBank <- function(data_url, ...) {
 }
 
 # Define the file path
-data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+#data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
 
 # Call the function with the file path
-transaction_data <- read_USBank(data_url)
+#transaction_data <- read_USBank(data_url)
