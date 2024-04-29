@@ -109,10 +109,18 @@ read_USBank <- function(data_url, ...) {
 
   # Drop unnecessary rows or columns if needed
   # For example:
-  data <- data[, -4]
+  data <- data[, -c(2,4)]
 
   # Perform additional data manipulation steps if needed
   # For example, creating a column for expenditure and deposit
+  # Converting date to Date format
+  data$Date <- as.Date(data$Date, "%Y-%m-%d")
+
+
+
+  # Create a column for expenditure, deposit
+  data <- data |>
+    dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
 
   # Return the processed data
   return(data)
@@ -120,6 +128,10 @@ read_USBank <- function(data_url, ...) {
 
 # Define the file path
 data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
 
 # Call the function with the file path
+
 transaction_data <- read_USBank(data_url)
+transaction_data2 <- read_boa(data_url1)
+
