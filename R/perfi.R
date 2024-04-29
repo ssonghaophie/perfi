@@ -1,4 +1,4 @@
-#' @title Reading transaction spreadsheet
+#' @title Reading transaction spreadsheet of Bank of American Accounts
 #' @description
 #' @importFrom utils read.csv
 #' @importFrom dplyr mutate
@@ -96,6 +96,12 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
   return(budget)
 }
 
+#' @title Reading transaction spreadsheet of US Bank Accounts
+#' @description
+#' @importFrom utils read.csv
+#' @importFrom
+#' @export
+#'
 # Define the function to read USBank transaction data
 read_USBank <- function(data_url, ...) {
   # Read CSV
