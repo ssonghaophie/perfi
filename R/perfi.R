@@ -95,3 +95,25 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
   budget <- list(needs = needs, wants = wants, savings = savings)
   return(budget)
 }
+
+# Define the function to read USBank transaction data
+read_USBank <- function(data_url, ...) {
+  # Read CSV
+  data <- utils::read.csv(data_url)
+
+  # Drop unnecessary rows or columns if needed
+  # For example:
+  data <- data[, -4]
+
+  # Perform additional data manipulation steps if needed
+  # For example, creating a column for expenditure and deposit
+
+  # Return the processed data
+  return(data)
+}
+
+# Define the file path
+data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+
+# Call the function with the file path
+transaction_data <- read_USBank(data_url)
