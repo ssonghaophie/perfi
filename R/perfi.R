@@ -75,6 +75,7 @@ summary_stats <- function(data, ...) {
 #' @importFrom ggplot2 scale_fill_brewer
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 labs
+#' @importFrom ggplot2 aes
 #' @export
 
 avg_spend <- function(data, ...) {
@@ -87,7 +88,7 @@ avg_spend <- function(data, ...) {
   time <- as.numeric(difftime(max(spend$Date), min(spend$Date)))
   # creating new columns and grouping rows
   spend <- spend |>
-    dplyr::select(-Description, -Status) |>
+    dplyr::select(-Desc, -Status) |>
     dplyr::mutate(week = cut.Date(Date, breaks = "1 week", labels = FALSE)) |>
     dplyr::group_by(week) |>
     dplyr::summarize(sum(Amount)) |>
@@ -96,7 +97,7 @@ avg_spend <- function(data, ...) {
   colnames(spend) <- c("week", "wk_spend", "avg_spend")
   # creating graph
   plot <- ggplot2::ggplot(data = spend) +
-    ggplot2::geom_col(aes(x = week,
+    ggplot2::geom_col(ggplot2::aes(x = week,
                  y = wk_spend,
                  fill = factor(week))) +
     ggplot2::scale_fill_brewer(palette = "Set3")  +
