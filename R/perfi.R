@@ -115,7 +115,6 @@ avg_spend <- function(data, ...) {
 #' @title Returns income budgeted for user
 #' @description This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
 #' needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
-#' @importFrom
 #' @export
 
 budget_income <- function(income, needs_percent = .5, wants_percent = .3, savings_percent = .2,  freq = "bi-weekly"){
