@@ -180,6 +180,29 @@ read_USBank <- function(data_url, ...) {
   return(data)
 }
 
+#' @title Creating a pie chart for imported transaction sheet
+#' @description
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom graphics pie
+#' @export
+
+category <- function(data, ...) {
+  pie_table <- data |>
+    dplyr::group_by(Category) |>
+    dplyr::summarize(sum(Amount))
+  colnames(pie_table) <- c("pie", "total")
+  pie_table$total <- abs(pie_table$total)
+
+  slice <- pie_table$total
+  lbl <- pie_table$pie
+  colors <- RColorBrewer::brewer.pal(n = length(slice), name = "Set3")
+
+  graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors)
+
+}
+
 # # Define the file path
 # data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
 # data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
