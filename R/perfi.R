@@ -64,19 +64,53 @@ summary_stats <- function(data, ...) {
   return(total)
 }
 
-#' @title Calculating average spending (by day and week)
+#' @title Calculating average spending (by day and week) and visualizing weekly spending
 #' @description
-#' @importFrom
+#' @importFrom dplyr filter
+#' @importFrom dplyr select
+#' @importFrom dplyr mutate
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 geom_col
+#' @importFrom ggplot2 scale_fill_brewer
+#' @importFrom ggplot2 geom_line
+#' @importFrom ggplot2 labs
 #' @export
 
 avg_spend <- function(data, ...) {
-  total_spd <- abs(sum(ifelse(data$Status == "Expenditure", data$Amount, NA), na.rm = TRUE))
-  num_day <- as.numeric(difftime(max(data$Date), min(data$Date)))
-  num_wk <- round(as.numeric(num_day/7), digits = 2)
-  avg <- data.frame("Average_by" = c("Day", "Week"),
-             "Spending" = c(round(total_spd/num_day, digits = 2), round(total_spd/num_wk, digits = 2))
-  )
-  return(avg)
+  spend <- data |>
+    dplyr::filter(Amount < 0)
+  # changing values from negative to positive for graphing purposes
+  spend$Amount <- abs(spend$Amount)
+  # for avg spending
+  ttl <- sum(spend$Amount)
+  time <- as.numeric(difftime(max(spend$Date), min(spend$Date)))
+  # creating new columns and grouping rows
+  spend <- spend |>
+    dplyr::select(-Description, -Status) |>
+    dplyr::mutate(week = cut.Date(Date, breaks = "1 week", labels = FALSE)) |>
+    dplyr::group_by(week) |>
+    dplyr::summarize(sum(Amount)) |>
+    dplyr::mutate(avg_spending = round(ttl/time*7, digits = 2))
+  # change col name
+  colnames(spend) <- c("week", "wk_spend", "avg_spend")
+  # creating graph
+  plot <- ggplot2::ggplot(data = spend) +
+    ggplot2::geom_col(aes(x = week,
+                 y = wk_spend,
+                 fill = factor(week))) +
+    ggplot2::scale_fill_brewer(palette = "Set3")  +
+    ggplot2::geom_line(aes(x = week,
+                  y = avg_spend),
+              linetype = 2,
+              size = 2,
+              col = "#9bb8ed") +
+    ggplot2::labs(title = "Weekly Spending",
+         x = "Week",
+         y = "Spending",
+         fill = "Week")
+  return(plot)
 }
 
 #' @title Returns income budgeted for user
@@ -127,6 +161,7 @@ read_USBank <- function(data_url, ...) {
 }
 
 # Define the file path
+
 data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
 data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
 
@@ -134,4 +169,10 @@ data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
 
 transaction_data <- read_USBank(data_url)
 transaction_data2 <- read_boa(data_url1)
+
+
+#data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+
+# Call the function with the file path
+#transaction_data <- read_USBank(data_url)
 
