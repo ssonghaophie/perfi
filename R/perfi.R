@@ -154,7 +154,7 @@ read_USBank <- function(data_url, ...) {
 
   # create categories
   data <- data |>
-    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
+    dplyr::mutate(Description  = gsub(" \\d{2}/\\d{2}.*", "", Name, ignore.case = TRUE)) |>
     dplyr::mutate(Category =
                     #Transaction
                     ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
@@ -209,12 +209,12 @@ category <- function(data, ...) {
 
 }
 
-# # Define the file path
-# data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
-# data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
-#
-# # Call the function with the file path
-#
-# transaction_data <- read_USBank(data_url)
-# transaction_data2 <- read_boa(data_url1)
+# Define the file path
+data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
+
+# Call the function with the file path
+
+transaction_data <- read_USBank(data_url)
+transaction_data2 <- read_boa(data_url1)
 
