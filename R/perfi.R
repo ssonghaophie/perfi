@@ -19,33 +19,29 @@ read_boa <- function(data_url, ...) {
     dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
   # create categories
   data <- data |>
-    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE))
-  data <- data |>
+    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
     dplyr::mutate(Category =
-                    # Transaction
+                    #Transaction
                     ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
-
                     # Pharmacy
                     ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
-
                     # Grocery
                     ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
-
+                    # Food
+                    ifelse(grepl("\\*EATS| GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
+                    # Drink and Desserts
+                    ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE", Description, ignore.case = TRUE), "Drink and Dessert",
                     # Transportation
                     ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
-
-                    # Food
-                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|T. Roots|Noodles|Oriental Taste|
-CHIPOTLE|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
-
                     # Clothes
-                    ifelse(grepl("URBAN OUTFITTERS|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
-
+                    ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
+                    # Entertainment
+                    ifelse(grepl("CINEMARK THEATRES|SPOTIFY", Description, ignore.case = TRUE), "Entertainment",
                     # Shopping
-                    ifelse(grepl("BLUE BOTTLE COFFEE|BOOKSHOP|THE ROOST|MOCHINUT|HUI LAO SHAN|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
-
-                    Desc))))))))
-
+                    ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
+                    # Miscellaneous
+                    "Misc."
+                     ))))))))))
   return(data)
 }
 
@@ -150,27 +146,31 @@ read_USBank <- function(data_url, ...) {
   # Converting date to Date format
   data$Date <- as.Date(data$Date, "%Y-%m-%d")
 
+  # create categories
   data <- data |>
-    dplyr::mutate(Description = gsub(" \\d{2}/\\d{2}.*", "", Name, ignore.case = TRUE))
-  data <- data |>
+    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
     dplyr::mutate(Category =
-         # Transaction
-          ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Name, ignore.case = TRUE), "Transaction",
-          # Pharmacy
-          ifelse(grepl("CVS", Name, ignore.case = TRUE), "Pharmacy",
-          # Grocery
-          ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Name, ignore.case = TRUE), "Grocery",
-          # Transportation
-          ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Name, ignore.case = TRUE), "Transportation",
-          # Food
-          ifelse(grepl("\\*EATS|GRUBHUB|Doordash|T. Roots|Noodles|Oriental Taste| CHIPOTLE|MEXCALITO NOHO", Name, ignore.case = TRUE), "Food",
-          # Clothes
-          ifelse(grepl("URBAN OUTFITTERS|American Eagle|FOREVER21|ALTAR'D STATE", Name, ignore.case = TRUE), "Clothes",
-          # Shopping
-          ifelse(grepl("BLUE BOTTLE COFFEE|BOOKSHOP|THE ROOST|MOCHINUT|HUI LAO SHAN|ZUMIEZ|APPLE.COM", Name, ignore.case = TRUE), "Shopping",
-           Description ))))))))
-
-
+                    #Transaction
+                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
+                           # Pharmacy
+                           ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
+                                  # Grocery
+                                  ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
+                                         # Food
+                                         ifelse(grepl("\\*EATS| GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
+                                                # Drink and Desserts
+                                                ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE", Description, ignore.case = TRUE), "Drink and Dessert",
+                                                       # Transportation
+                                                       ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
+                                                              # Clothes
+                                                              ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
+                                                                     # Entertainment
+                                                                     ifelse(grepl("CINEMARK THEATRES|SPOTIFY", Description, ignore.case = TRUE), "Entertainment",
+                                                                            # Shopping
+                                                                            ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
+                                                                                   # Miscellaneous
+                                                                                   "Misc."
+                                                                            ))))))))))
 
   # Create a column for expenditure, deposit
   data <- data |>
