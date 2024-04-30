@@ -1,5 +1,7 @@
 #' @title Reading transaction spreadsheet of Bank of American Accounts
-#' @description
+#' @description This function reads transaction data from Bank of America accounts stored in a CSV file located at the specified URL. It removes unnecessary
+#' rows and columns,converts the date column to the Date format, categorizes transactions into expenditure or deposit, and assigns categories based on
+#' transaction descriptions.Making it
 #' @importFrom utils read.csv
 #' @importFrom dplyr mutate
 #' @export
@@ -22,36 +24,35 @@ read_boa <- function(data_url, ...) {
     dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE))
   data <- data |>
     dplyr::mutate(Category =
-                    # Transaction
-                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
+              # Transaction
+              ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
 
-                    # Pharmacy
-                    ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
+              # Pharmacy
+              ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
 
-                    # Grocery
-                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
+              # Grocery
+              ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
 
-                    # Transportation
-                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
+              # Transportation
+              ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
 
-                    # Food
-                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|T. Roots|Noodles|Oriental Taste|
-CHIPOTLE|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
+              # Food
+              ifelse(grepl("\\*EATS|GRUBHUB|Doordash|T. Roots|Noodles|Oriental Taste| CHIPOTLE|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
 
-                    # Clothes
-                    ifelse(grepl("URBAN OUTFITTERS|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
+              # Clothes
+              ifelse(grepl("URBAN OUTFITTERS|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
 
-                    # Shopping
-                    ifelse(grepl("BLUE BOTTLE COFFEE|BOOKSHOP|THE ROOST|MOCHINUT|HUI LAO SHAN|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
+              # Shopping
+              ifelse(grepl("BLUE BOTTLE COFFEE|BOOKSHOP|THE ROOST|MOCHINUT|HUI LAO SHAN|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
 
-                    Desc))))))))
+              Desc))))))))
 
   return(data)
 }
 
-
 #' @title Creating summary tables and visualizations of personal finance statistics
-#' @description
+#' @description This function generates summary tables and visualizations of personal finance statistics based on the provided data. It calculates totals
+#' grouped by transaction status (expenditure or deposit) and returns a summary table.
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarize
 #' @export
@@ -65,7 +66,8 @@ summary_stats <- function(data, ...) {
 }
 
 #' @title Calculating average spending (by day and week) and visualizing weekly spending
-#' @description
+#' @description This function calculates the average spending per day and per week based on the provided transaction data. It then visualizes the weekly
+#' spending along with the average spending trend over time.
 #' @importFrom dplyr filter
 #' @importFrom dplyr select
 #' @importFrom dplyr mutate
@@ -114,7 +116,8 @@ avg_spend <- function(data, ...) {
 }
 
 #' @title Returns income budgeted for user
-#' @description
+#' @description This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
+#' needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
 #' @importFrom
 #' @export
 
@@ -131,11 +134,13 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
 }
 
 #' @title Reading transaction spreadsheet of US Bank Accounts
-#' @description
+#' @description This function reads transaction data from US Bank accounts stored in a CSV file located at the specified URL. It performs necessary data
+#' manipulation steps such as dropping unnecessary rows or columns, converting the date column to the Date format, extracting descriptions from transaction names,
+#' categorizing transactions into different categories, and creating a column for expenditure and deposit based on transaction amounts.
 #' @importFrom utils read.csv
-#' @importFrom
+#' @importFrom dplyr mutate
 #' @export
-#'
+
 # Define the function to read USBank transaction data
 read_USBank <- function(data_url, ...) {
   # Read CSV
@@ -204,11 +209,11 @@ category <- function(data, ...) {
 }
 
 # # Define the file path
-# data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
-# data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
-#
+data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
+
 # # Call the function with the file path
-#
-# transaction_data <- read_USBank(data_url)
-# transaction_data2 <- read_boa(data_url1)
+
+transaction_data <- read_USBank(data_url)
+transaction_data2 <- read_boa(data_url1)
 
