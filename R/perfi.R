@@ -101,7 +101,7 @@ avg_spend <- function(data, ...) {
                  y = wk_spend,
                  fill = factor(week))) +
     ggplot2::scale_fill_brewer(palette = "Set3")  +
-    ggplot2::geom_line(aes(x = week,
+    ggplot2::geom_line(ggplot2::aes(x = week,
                   y = avg_spend),
               linetype = 2,
               size = 2,
@@ -194,7 +194,7 @@ read_USBank <- function(data_url, ...) {
 #' @importFrom graphics pie
 #' @export
 
-category <- function(data, ...) {
+generate_pie <- function(data, ...) {
   pie_table <- data |>
     dplyr::group_by(Category) |>
     dplyr::summarize(sum(Amount))
@@ -206,7 +206,6 @@ category <- function(data, ...) {
   colors <- RColorBrewer::brewer.pal(n = length(slice), name = "Set3")
 
   graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9)
-
 }
 
 
