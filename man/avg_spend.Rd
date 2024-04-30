@@ -2,10 +2,11 @@
 % Please edit documentation in R/perfi.R
 \name{avg_spend}
 \alias{avg_spend}
-\title{Calculating average spending (by day and week)}
+\title{Calculating average spending (by day and week) and visualizing weekly spending}
 \usage{
 avg_spend(data, ...)
 }
 \description{
-Calculating average spending (by day and week)
+This function calculates the average spending per day and per week based on the provided transaction data. It then visualizes the weekly
+spending along with the average spending trend over time.
 }

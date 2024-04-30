@@ -7,5 +7,7 @@
 read_boa(data_url, ...)
 }
 \description{
-Reading transaction spreadsheet of Bank of American Accounts
+This function reads transaction data from Bank of America accounts stored in a CSV file located at the specified URL. It removes unnecessary
+rows and columns,converts the date column to the Date format, categorizes transactions into expenditure or deposit, and assigns categories based on
+transaction descriptions.Making it
 }

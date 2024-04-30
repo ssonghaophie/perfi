@@ -7,5 +7,6 @@
 summary_stats(data, ...)
 }
 \description{
-Creating summary tables and visualizations of personal finance statistics
+This function generates summary tables and visualizations of personal finance statistics based on the provided data. It calculates totals
+grouped by transaction status (expenditure or deposit) and returns a summary table.
 }
