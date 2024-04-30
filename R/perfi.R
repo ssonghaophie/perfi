@@ -6,7 +6,6 @@
 #' @importFrom dplyr mutate
 #' @export
 #'
-#'
 
 # read boa transaction data
 read_boa <- function(data_url, ...) {
@@ -209,11 +208,11 @@ category <- function(data, ...) {
 }
 
 # # Define the file path
-data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
-data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
-
+# data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+# data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
+#
 # # Call the function with the file path
-
-transaction_data <- read_USBank(data_url)
-transaction_data2 <- read_boa(data_url1)
+#
+# transaction_data <- read_USBank(data_url)
+# transaction_data2 <- read_boa(data_url1)
 
