@@ -13,5 +13,6 @@ budget_income(
 )
 }
 \description{
-Returns income budgeted for user
+This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
+needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
 }
