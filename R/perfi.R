@@ -20,7 +20,7 @@ read_boa <- function(data_url, ...) {
     dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
   # create categories
   data <- data |>
-    dplyr::mutate(Description = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
+    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
     dplyr::mutate(Category =
                     #Transaction
                     ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
