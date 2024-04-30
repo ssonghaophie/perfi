@@ -43,7 +43,7 @@ read_boa <- function(data_url, ...) {
                     # Miscellaneous
                     "Misc."
                      ))))))))))
-
+  data <- data[, -2]
   return(data)
 }
 
@@ -177,7 +177,7 @@ read_USBank <- function(data_url, ...) {
                     # Miscellaneous
                     "Misc."
                     ))))))))))
-
+  data <- data[, -2]
   # Create a column for expenditure, deposit
   data <- data |>
     dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
@@ -209,12 +209,5 @@ category <- function(data, ...) {
 
 }
 
-# Define the file path
-data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
-data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
 
-# Call the function with the file path
-
-transaction_data <- read_USBank(data_url)
-transaction_data2 <- read_boa(data_url1)
 
