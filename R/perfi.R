@@ -150,6 +150,26 @@ read_USBank <- function(data_url, ...) {
   # Converting date to Date format
   data$Date <- as.Date(data$Date, "%Y-%m-%d")
 
+  data <- data |>
+    dplyr::mutate(Description = gsub(" \\d{2}/\\d{2}.*", "", Name, ignore.case = TRUE))
+  data <- data |>
+    dplyr::mutate(Category =
+         # Transaction
+          ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Name, ignore.case = TRUE), "Transaction",
+          # Pharmacy
+          ifelse(grepl("CVS", Name, ignore.case = TRUE), "Pharmacy",
+          # Grocery
+          ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Name, ignore.case = TRUE), "Grocery",
+          # Transportation
+          ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Name, ignore.case = TRUE), "Transportation",
+          # Food
+          ifelse(grepl("\\*EATS|GRUBHUB|Doordash|T. Roots|Noodles|Oriental Taste| CHIPOTLE|MEXCALITO NOHO", Name, ignore.case = TRUE), "Food",
+          # Clothes
+          ifelse(grepl("URBAN OUTFITTERS|American Eagle|FOREVER21|ALTAR'D STATE", Name, ignore.case = TRUE), "Clothes",
+          # Shopping
+          ifelse(grepl("BLUE BOTTLE COFFEE|BOOKSHOP|THE ROOST|MOCHINUT|HUI LAO SHAN|ZUMIEZ|APPLE.COM", Name, ignore.case = TRUE), "Shopping",
+           Description ))))))))
+
 
 
   # Create a column for expenditure, deposit
@@ -160,19 +180,12 @@ read_USBank <- function(data_url, ...) {
   return(data)
 }
 
-# Define the file path
-
-data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
-data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
-
-# Call the function with the file path
-
-transaction_data <- read_USBank(data_url)
-transaction_data2 <- read_boa(data_url1)
-
-
-#data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
-
-# Call the function with the file path
-#transaction_data <- read_USBank(data_url)
+# # Define the file path
+# data_url <- "/Users/racheltolentino/documents/sample_data3.csv"
+# data_url1 <- "/Users/racheltolentino/documents/sample_data2.csv"
+#
+# # Call the function with the file path
+#
+# transaction_data <- read_USBank(data_url)
+# transaction_data2 <- read_boa(data_url1)
 
