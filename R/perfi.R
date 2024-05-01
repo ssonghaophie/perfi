@@ -119,7 +119,7 @@ avg_spend <- function(data, ...) {
   # creating new columns and grouping rows
   spend <- spend |>
     dplyr::select(-Description, -Status) |>
-    dplyr::mutate(week = cut.Date(Date, breaks = "week", labels = FALSE)) |>
+    dplyr::mutate(week = cut.Date(Date, breaks = "1 week", labels = FALSE)) |>
     dplyr::group_by(week) |>
     dplyr::summarize(sum(Amount)) |>
     dplyr::mutate(avg_spending = round(ttl/time*7, digits = 2))
