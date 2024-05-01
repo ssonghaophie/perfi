@@ -107,7 +107,7 @@ summary_stats <- function(data, ...) {
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 aes
 #' @export
-?cut.Date
+
 avg_spend <- function(data, ...) {
   spend <- data |>
     dplyr::filter(Amount < 0)
