@@ -1,16 +1,45 @@
+
+#' @title Getting path to example data
+#' @description There are 3 example transaction data files in `inst/extdata` directory of a perfi package.
+#' This function returns a file path of the example data to utilize them.
+#' @param file Name of example data file in string. Default is `NULL`, and it will list out the example files.
+#' @export
+#' @examples
+#' read_example()
+#' read_example("boa_example_data.csv")
+
+read_example <- function(file = NULL) {
+  # return list of the data we have if data = NULL
+  if (is.null(file)) {
+    dir(system.file("extdata", package = "perfi"))
+  } else {
+    # get the file path
+    system.file("extdata", file, package = "perfi", mustWork = TRUE)
+  }
+}
+
+?read.csv
+
 #' @title Reading transaction spreadsheet of Bank of American Accounts
-#' @description This function reads transaction data from Bank of America accounts stored in a CSV file located at the specified URL. It removes unnecessary
-#' rows and columns,converts the date column to the Date format, categorizes transactions into expenditure or deposit, and assigns categories based on
-#' transaction descriptions.Making it
+#' @description This function reads transaction data from Bank of America accounts stored in a CSV file. It removes unnecessary
+#' rows and columns, converts the date column to the Date format, categorizes transactions into expenditure or deposit, and assigns categories based on
+#' transaction descriptions.
+#' @param file Name of the CSV file. It can be an absolute path, relative path, or a complete URL of the data file.
+#' @return Dataframe of a transaction data
 #' @importFrom utils read.csv
 #' @importFrom dplyr mutate
-#' @export
+#' @importFrom dplyr select
+#' @importFrom dplyr rename
 #'
+#' @export
+#' @examples
+#' read_boa(boa_data)
+#' read_boa("boa_example_data.csv")
 
 # read boa transaction data
-read_boa <- function(data_url, ...) {
+read_boa <- function(file, ...) {
   # read csv
-  data <- utils::read.csv(data_url, skip = 5)
+  data <- utils::read.csv(file, skip = 5)
   # drop unnecessary row, column
   data <- data[-1, -4]
   # converting date to Date format
@@ -21,6 +50,8 @@ read_boa <- function(data_url, ...) {
   # create categories
   data <- data |>
     dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
+    dplyr::select(-Description) |>
+    dplyr::rename(Description = Desc) |>
     dplyr::mutate(Category =
                     #Transaction
                     ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
@@ -29,7 +60,7 @@ read_boa <- function(data_url, ...) {
                     # Grocery
                     ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
                     # Food
-                    ifelse(grepl("\\*EATS| GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
+                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
                     # Drink and Desserts
                     ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE", Description, ignore.case = TRUE), "Drink and Dessert",
                     # Transportation
@@ -43,7 +74,6 @@ read_boa <- function(data_url, ...) {
                     # Miscellaneous
                     "Misc."
                      ))))))))))
-  data <- data[, -2]
   return(data)
 }
 
@@ -77,7 +107,7 @@ summary_stats <- function(data, ...) {
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 aes
 #' @export
-
+?cut.Date
 avg_spend <- function(data, ...) {
   spend <- data |>
     dplyr::filter(Amount < 0)
@@ -88,8 +118,8 @@ avg_spend <- function(data, ...) {
   time <- as.numeric(difftime(max(spend$Date), min(spend$Date)))
   # creating new columns and grouping rows
   spend <- spend |>
-    dplyr::select(-Desc, -Status) |>
-    dplyr::mutate(week = cut.Date(Date, breaks = "1 week", labels = FALSE)) |>
+    dplyr::select(-Description, -Status) |>
+    dplyr::mutate(week = cut.Date(Date, breaks = "week", labels = FALSE)) |>
     dplyr::group_by(week) |>
     dplyr::summarize(sum(Amount)) |>
     dplyr::mutate(avg_spending = round(ttl/time*7, digits = 2))
@@ -157,13 +187,13 @@ read_USBank <- function(data_url, ...) {
     dplyr::mutate(Description  = gsub(" \\d{2}/\\d{2}.*", "", Name, ignore.case = TRUE)) |>
     dplyr::mutate(Category =
                     #Transaction
-                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
+                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM|DEPOSIT", Description, ignore.case = TRUE), "Transaction",
                     # Pharmacy
                     ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
                     # Grocery
                     ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
                     # Food
-                    ifelse(grepl("\\*EATS| GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
+                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
                     # Drink and Desserts
                     ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE", Description, ignore.case = TRUE), "Drink and Dessert",
                     # Transportation
