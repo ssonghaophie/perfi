@@ -4,6 +4,10 @@
 # perfi
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/ssonghaophie/perfi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ssonghaophie/perfi/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/perfi)](https://CRAN.R-project.org/package=perfi)
 <!-- badges: end -->
 
 ### Overview
@@ -42,19 +46,19 @@ devtools::install_github("ssonghaophie/perfi")
 #> tidyselect (1.2.0 -> 1.2.1) [CRAN]
 #> ggplot2    (3.4.4 -> 3.5.1) [CRAN]
 #> Installing 4 packages: munsell, gtable, tidyselect, ggplot2
-#> Installing packages into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/Rtmp0ksbVV/temp_libpath1d426fed1155'
+#> Installing packages into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/Rtmp0ksbVV/temp_libpath1d4228db59a'
 #> (as 'lib' is unspecified)
 #> 
 #> The downloaded binary packages are in
-#>  /var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T//RtmpP1NFgP/downloaded_packages
+#>  /var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T//RtmpJBf232/downloaded_packages
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/RtmpP1NFgP/remotes1e0f51b5fa46/ssonghaophie-perfi-51f720e/DESCRIPTION’ ... OK
+#> * checking for file ‘/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/RtmpJBf232/remotes20d517b1f30c/ssonghaophie-perfi-360589e/DESCRIPTION’ ... OK
 #> * preparing ‘perfi’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
 #> * building ‘perfi_0.0.0.9000.tar.gz’
-#> Installing package into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/Rtmp0ksbVV/temp_libpath1d426fed1155'
+#> Installing package into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/Rtmp0ksbVV/temp_libpath1d4228db59a'
 #> (as 'lib' is unspecified)
 ```
 
@@ -96,27 +100,3 @@ library(perfi)
 - Olivia Wang
 - Sophie Song
 - Rachel Tolentino.
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
