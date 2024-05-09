@@ -1,0 +1,69 @@
+README 
+title: "Untitled"
+output: github_document
+---
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+options(width=10000)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Overview
+Perfi is a personal finance R package that  provides a suite of tools for importing, cleaning, analyzing, and visualizing personal finance transaction data from different sources like Bank of America and US Bank accounts. More specifically, Perfi features functions which allows users to import and clean their bank transactions, visualize expenditure distribution, budget their income, calculate average spending and summarize their personal finance statistics. 
+The package currently contains dependencies on dplyr, utils, RColorBrewer, graphics and ggplot2. 
+
+
+### Target Audience
+This package was developed with the goal of simplifying personal finance analysis for individuals of all backgrounds. Whether you're a seasoned financial analyst or someone new to managing finances, our aim is to provide an accessible and intuitive tool for analyzing bank statements. Our package offers a user-friendly interface and actionable insights to help users gain a comprehensive understanding of their financial situation.
+
+
+### Installation 
+
+You can install singR from GitHub with: 
+
+```{r, eval= FALSE}
+devtools::install_github("ssonghaophie/perfi")
+```
+
+### Datasets Included 
++ `boa_example_data`: A CSV that contains Bank of America transactions.
++ `boa_example_data`: A CSV that contains Bank of America transactions including information such as beginning the balance, ending balance, date, description, amount and running balance. 
++ `usbs_example_data`: A CSV that contains US Bank transactions including information such as date, transaction, name, memo, amount. 
+
+### Functions Included
+
+Functions inside the package:
++ `read_example`: Retrieves file paths for example transaction data files in the "perfi" package's directory.
++ `read_boa`: Reads, cleans, categorizes, and assigns categories to Bank of America transaction data.
++ `summary_stats`: Generates summary tables of personal finance statistics, calculating totals grouped by transaction status.
++ `avg_spend`: Calculates average daily and weekly spending from transaction data and visualizes weekly spending trends.
++ `budget_income`: Calculates budget allocations for needs, wants, and savings based on user income and preferences.
++ `read_USBank`: Reads, cleans, categorizes, and assigns categories to US Bank transaction data from a specified URL.
++ `generate_pie`: Creates a pie chart illustrating expenditure distribution by category based on transaction data.
+
+### Package Usage Examples
+
+Load perfi R package. 
+
+```{r}
+# Load the package 
+library(perfi)
+
+```
+
+## Contributors
+
+- Olivia Wang 
+- Sophie Song
+- Rachel Tolentino
