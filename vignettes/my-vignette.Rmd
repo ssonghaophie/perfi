@@ -1,8 +1,8 @@
 ---
-title: "my-vignette"
+title: "Using the perfi package"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{my-vignette}
+  %\VignetteIndexEntry{Using the perfi package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +14,18 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Personal finance
+
+The perfi package lets you import transaction sheets from your bank and organize your expenditure and deposits. First, we load the `perfi` package.
+
 ```{r setup}
 library(perfi)
 ```
+
+Then, depending on your bank, use `read_boa` or `read_USBank` to import your transaction sheet.
+
+```{r}
+example <- read_example("boa_example_data.csv")
+data <- read_boa(example)
+```
+
