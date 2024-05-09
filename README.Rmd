@@ -1,7 +1,7 @@
-README 
-title: "Untitled"
+---
 output: github_document
 ---
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
@@ -11,17 +11,15 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
-options(width=10000)
 ```
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# perfi
 
+<!-- badges: start -->
+<!-- badges: end -->
 
 ### Overview
-Perfi is a personal finance R package that  provides a suite of tools for importing, cleaning, analyzing, and visualizing personal finance transaction data from different sources like Bank of America and US Bank accounts. More specifically, Perfi features functions which allows users to import and clean their bank transactions, visualize expenditure distribution, budget their income, calculate average spending and summarize their personal finance statistics. 
-The package currently contains dependencies on dplyr, utils, RColorBrewer, graphics and ggplot2. 
+Perfi is a personal finance R package that  provides a suite of tools for importing, cleaning, analyzing, and visualizing personal finance transaction data from different sources like Bank of America and US Bank accounts. More specifically, Perfi features functions which allows users to import and clean their bank transactions, visualize expenditure distribution, budget their income, calculate average spending and summarize their personal finance statistics. The package currently contains dependencies on dplyr, utils, RColorBrewer, graphics and ggplot2. 
 
 
 ### Target Audience
@@ -30,11 +28,14 @@ This package was developed with the goal of simplifying personal finance analysi
 
 ### Installation 
 
-You can install singR from GitHub with: 
 
-```{r, eval= FALSE}
+You can install the development version of perfi from [GitHub](https://github.com/) with:
+```{r}
+# install.packages("devtools")
 devtools::install_github("ssonghaophie/perfi")
 ```
+
+
 
 ### Datasets Included 
 + `boa_example_data`: A CSV that contains Bank of America transactions.
@@ -66,4 +67,21 @@ library(perfi)
 
 - Olivia Wang 
 - Sophie Song
-- Rachel Tolentino
+- Rachel Tolentino.
+
+
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+
+```{r cars}
+summary(cars)
+```
+
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+
+You can also embed plots, for example:
+
+```{r pressure, echo = FALSE}
+plot(pressure)
+```
+
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
