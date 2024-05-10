@@ -77,6 +77,58 @@ read_boa <- function(file, ...) {
   return(data)
 }
 
+#' @title Reading transaction spreadsheet of US Bank Accounts
+#' @description This function reads transaction data from US Bank accounts stored in a CSV file. It performs necessary data
+#' manipulation steps such as dropping unnecessary rows or columns, converting the date column to the Date format, extracting descriptions from transaction names,
+#' categorizing transactions into different categories, and creating a column for expenditure and deposit based on transaction amounts.
+#' @importFrom utils read.csv
+#' @importFrom dplyr mutate
+#' @export
+
+# Define the function to read USBank transaction data
+read_USBank <- function(file, ...) {
+  # Read CSV
+  data <- utils::read.csv(file)
+  # Drop unnecessary rows or columns if needed
+  # For example:
+  data <- data[, -c(2,4)]
+  # Perform additional data manipulation steps if needed
+  # For example, creating a column for expenditure and deposit
+  # Converting date to Date format
+  data$Date <- as.Date(data$Date, "%Y-%m-%d")
+  # Create a column for expenditure, deposit
+  data <- data |>
+    dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
+  # create categories
+  data <- data |>
+    dplyr::mutate(Description  = gsub(" \\d{2}/\\d{2}.*", "", Name, ignore.case = TRUE), .after = 2) |>
+    dplyr::mutate(Category =
+                    #Transaction
+                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM|DEPOSIT", Description, ignore.case = TRUE), "Transaction",
+                    # Pharmacy
+                    ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
+                    # Grocery
+                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S|H MART", Description, ignore.case = TRUE), "Grocery",
+                    # Food
+                    ifelse(grepl("EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO|FOOD|MCDONALD'S", Description, ignore.case = TRUE), "Food",
+                    # Drink and Desserts
+                    ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE|CAFE", Description, ignore.case = TRUE), "Drink and Dessert",
+                    # Transportation
+                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
+                    # Clothes
+                    ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
+                    # Entertainment
+                    ifelse(grepl("CINEMARK THEATRES|SPOTIFY", Description, ignore.case = TRUE), "Entertainment",
+                    # Shopping
+                    ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM|GAMESTOP|TARGET", Description, ignore.case = TRUE), "Shopping",
+                    # Miscellaneous
+                    "Misc."
+                    ))))))))))
+  data <- data[, -2]
+  # Return the processed data
+  return(data)
+}
+
 #' @title Creating summary tables and visualizations of personal finance statistics
 #' @description This function generates summary tables and visualizations of personal finance statistics based on the provided data. It calculates totals
 #' grouped by transaction status (expenditure or deposit) and returns a summary table.
@@ -143,7 +195,7 @@ avg_spend <- function(data, ...) {
   return(plot)
 }
 
-#' @title Returns income budgeted for user
+#' @title Returning income budgeted for user
 #' @description This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
 #' needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
 #' @export
@@ -158,62 +210,6 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
 
   budget <- list(needs = needs, wants = wants, savings = savings)
   return(budget)
-}
-
-#' @title Reading transaction spreadsheet of US Bank Accounts
-#' @description This function reads transaction data from US Bank accounts stored in a CSV file located at the specified URL. It performs necessary data
-#' manipulation steps such as dropping unnecessary rows or columns, converting the date column to the Date format, extracting descriptions from transaction names,
-#' categorizing transactions into different categories, and creating a column for expenditure and deposit based on transaction amounts.
-#' @importFrom utils read.csv
-#' @importFrom dplyr mutate
-#' @export
-
-# Define the function to read USBank transaction data
-read_USBank <- function(data_url, ...) {
-  # Read CSV
-  data <- utils::read.csv(data_url)
-
-  # Drop unnecessary rows or columns if needed
-  # For example:
-  data <- data[, -c(2,4)]
-
-  # Perform additional data manipulation steps if needed
-  # For example, creating a column for expenditure and deposit
-  # Converting date to Date format
-  data$Date <- as.Date(data$Date, "%Y-%m-%d")
-
-  # create categories
-  data <- data |>
-    dplyr::mutate(Description  = gsub(" \\d{2}/\\d{2}.*", "", Name, ignore.case = TRUE)) |>
-    dplyr::mutate(Category =
-                    #Transaction
-                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM|DEPOSIT", Description, ignore.case = TRUE), "Transaction",
-                    # Pharmacy
-                    ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
-                    # Grocery
-                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
-                    # Food
-                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
-                    # Drink and Desserts
-                    ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE", Description, ignore.case = TRUE), "Drink and Dessert",
-                    # Transportation
-                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
-                    # Clothes
-                    ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
-                    # Entertainment
-                    ifelse(grepl("CINEMARK THEATRES|SPOTIFY", Description, ignore.case = TRUE), "Entertainment",
-                    # Shopping
-                    ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
-                    # Miscellaneous
-                    "Misc."
-                    ))))))))))
-  data <- data[, -2]
-  # Create a column for expenditure, deposit
-  data <- data |>
-    dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
-
-  # Return the processed data
-  return(data)
 }
 
 #' @title Creating a pie chart for imported transaction sheet
