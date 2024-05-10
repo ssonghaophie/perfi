@@ -14,18 +14,34 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Personal finance
+## Loading bank transaction sheets
 
-The perfi package lets you import transaction sheets from your bank and organize your expenditure and deposits. First, we load the `perfi` package.
+The perfi package provides a suite of tools for importing, cleaning, analyzing, and visualizing personal finance transaction data from different banks. First, we load the `perfi` package.
 
 ```{r setup}
 library(perfi)
 ```
 
-Then, depending on your bank, use `read_boa` or `read_USBank` to import your transaction sheet.
+Then, depending on your bank, use `read_boa()` or `read_USBank()` to import your transaction sheet. To load our example data stored in `perfi`, we first use `read_example()`.
 
 ```{r}
 example <- read_example("boa_example_data.csv")
-data <- read_boa(example)
+user_data <- read_boa(example)
 ```
+
+## Summary stats
+
+Once we have the data loaded, we can use the `summary_stats()` function to calculate user's total expenditure and deposits in the given period.
+
+```{r}
+summary_stats(user_data)
+```
+## Spending by category
+
+A more detailed report of user's expenditure can be created with the `avg_spend()` function, in which a bar plot of expenditure will be created. Each bar represents the user's expenditure of the week, accompanied with a dotted line indicating their average weekly spending.
+
+```{r}
+avg_spend(user_data)
+```
+
 
