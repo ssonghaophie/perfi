@@ -82,6 +82,9 @@ read_boa <- function(file, ...) {
 #' @importFrom utils read.csv
 #' @importFrom dplyr mutate
 #' @export
+#' @examples
+#' usb_data <- read_example("usbs_example_data.csv")
+#' read_USBank(usb_data)
 
 # Define the function to read USBank transaction data
 read_USBank <- function(file, ...) {
@@ -133,6 +136,9 @@ read_USBank <- function(file, ...) {
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarize
 #' @export
+#' @examples
+#' boa_data <- read_boa(read_example("boa_example_data.csv"))
+#' summary_stats(boa_data)
 
 summary_stats <- function(data, ...) {
   total <- data |>
@@ -157,6 +163,9 @@ summary_stats <- function(data, ...) {
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 aes
 #' @export
+#' @examples
+#' boa_data <- read_boa(read_example("boa_example_data.csv"))
+#' avg_spend(boa_data)
 
 avg_spend <- function(data, ...) {
   spend <- data |>
@@ -197,6 +206,9 @@ avg_spend <- function(data, ...) {
 #' @description This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
 #' needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
 #' @export
+#' @examples
+#' budget_income(1000)
+#' budget_income(1000, freq = "weekly")
 
 budget_income <- function(income, needs_percent = .5, wants_percent = .3, savings_percent = .2,  freq = "bi-weekly"){
   if (freq == "weekly"){
@@ -217,6 +229,9 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom graphics pie
 #' @export
+#' @examples
+#' boa_data <- read_boa(read_example("boa_example_data.csv"))
+#' generate_pie(boa_data)
 
 generate_pie <- function(data, ...) {
   pie_table <- data |>
