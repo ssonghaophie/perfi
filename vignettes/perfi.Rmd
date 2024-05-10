@@ -1,0 +1,79 @@
+---
+title: "Using the perfi package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the perfi package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Loading bank transaction sheets
+
+The `perfi` package provides a suite of tools for importing, cleaning, analyzing, and visualizing personal finance transaction data from different banks. First, we load the `perfi` package.
+
+```{r setup}
+library(perfi)
+```
+
+Then, depending on your bank, use `read_boa()` or `read_USBank()` to import your transaction sheet. To load our example data stored in `perfi`, we first use `read_example()`. Below is an example of importing a BOA transaction sheet.
+
+```{r}
+example <- read_example("boa_example_data.csv")
+user_data <- read_boa(example)
+```
+
+User can also import transaction sheets from the US Bank.
+
+```{r}
+example_usb <- read_example("usbs_example_data.csv")
+user_usb_data <- read_USBank(example_usb)
+```
+
+
+## Summary stats
+
+Once we have the data loaded, we can use the `summary_stats()` function to calculate user's total expenditure and deposits in the given period.
+
+```{r}
+summary_stats(user_data)
+```
+
+
+## Spending by category
+
+A more detailed report of user's expenditure can be created with the `avg_spend()` function, in which a bar plot of expenditure will be created. Each bar represents the user's expenditure of the week, accompanied with a dotted line indicating their average weekly spending.
+
+```{r, fig.width=5, fig.height=4}
+avg_spend(user_data)
+```
+
+
+## Calculating budget allocation
+
+To determine the portion of their income allocated to needs, wants, and savings, user input their income to `budget_income()` function. The default distribution of needs, wants, and savings is 50%, 30%, and 20%, respectively. The default frequency is bi-weekly.
+
+```{r}
+budget_income(1000)
+```
+User can alter their preferences with `needs_percent`, `wants_percent`, `savings_percent`, and `freq` arguments. The function always returns bi-weekly budget.
+
+```{r}
+budget_income(1000, needs_percent = 0.4, wants_percent = 0.3, savings_percent = 0.3, freq = "weekly")
+```
+
+
+## Expenditure by category
+
+The `perfi` package also enables users to visualize their expenditure by category. Users can generate a pie chart of this kind using the `generate_pie()` function.
+
+```{r,fig.width=5, fig.height=4}
+generate_pie(user_data)
+```
+

@@ -2,7 +2,7 @@
 % Please edit documentation in R/perfi.R
 \name{budget_income}
 \alias{budget_income}
-\title{Returns income budgeted for user}
+\title{Returning income budgeted for user}
 \usage{
 budget_income(
   income,
@@ -12,6 +12,22 @@ budget_income(
   freq = "bi-weekly"
 )
 }
+\arguments{
+\item{income}{a numeric input from the user that represents their income}
+
+\item{needs_percent}{a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to needs, default setting is 0.5}
+
+\item{wants_percent}{a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to wants, default setting is 0.3}
+
+\item{savings_percent}{a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to savings, default setting is 0.3}
+
+\item{freq}{the frequency of income that user inputs, default setting is bi-weekly}
+}
 \description{
-Returns income budgeted for user
+This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
+needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
+}
+\examples{
+budget_income(1000)
+budget_income(1000, freq = "weekly")
 }

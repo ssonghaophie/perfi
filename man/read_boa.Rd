@@ -4,8 +4,23 @@
 \alias{read_boa}
 \title{Reading transaction spreadsheet of Bank of American Accounts}
 \usage{
-read_boa(data_url, ...)
+read_boa(file, ...)
+}
+\arguments{
+\item{file}{Name of the CSV file. It can be an absolute path, relative path, or a complete URL of the data file.}
+
+\item{...}{currently ignored}
+}
+\value{
+Dataframe of a transaction data
 }
 \description{
-Reading transaction spreadsheet of Bank of American Accounts
+This function reads transaction data from Bank of America accounts stored in a CSV file. It removes unnecessary
+rows and columns, converts the date column to the Date format, categorizes transactions into expenditure or deposit, and assigns categories based on
+transaction descriptions.
+}
+\examples{
+boa_data <- read_example("boa_example_data.csv")
+read_boa(boa_data)
+read_boa(read_example("boa_example_data2.csv"))
 }

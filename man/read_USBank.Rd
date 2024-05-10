@@ -4,8 +4,19 @@
 \alias{read_USBank}
 \title{Reading transaction spreadsheet of US Bank Accounts}
 \usage{
-read_USBank(data_url, ...)
+read_USBank(file, ...)
+}
+\arguments{
+\item{file}{Name of the CSV file. It can be an absolute path, relative path, or a complete URL of the data file.}
+
+\item{...}{currently ignored}
 }
 \description{
-Reading transaction spreadsheet of US Bank Accounts
+This function reads transaction data from US Bank accounts stored in a CSV file. It performs necessary data
+manipulation steps such as dropping unnecessary rows or columns, converting the date column to the Date format, extracting descriptions from transaction names,
+categorizing transactions into different categories, and creating a column for expenditure and deposit based on transaction amounts.
+}
+\examples{
+usb_data <- read_example("usbs_example_data.csv")
+read_USBank(usb_data)
 }

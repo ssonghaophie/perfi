@@ -6,6 +6,16 @@
 \usage{
 summary_stats(data, ...)
 }
+\arguments{
+\item{data}{imported transaction sheet, should be stored as a data frame}
+
+\item{...}{currently ignored}
+}
 \description{
-Creating summary tables and visualizations of personal finance statistics
+This function generates summary tables and visualizations of personal finance statistics based on the provided data. It calculates totals
+grouped by transaction status (expenditure or deposit) and returns a summary table.
+}
+\examples{
+boa_data <- read_boa(read_example("boa_example_data.csv"))
+summary_stats(boa_data)
 }
