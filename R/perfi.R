@@ -234,29 +234,50 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
 
 #' @title Creating a pie chart for imported transaction sheet
 #' @description This function visualizes user's expenditure by category by creating a pie chart
-#' @importFrom dplyr group_by
-#' @importFrom dplyr summarize
-#' @importFrom RColorBrewer brewer.pal
-#' @importFrom graphics pie
 #' @param data imported transaction sheet, should be stored as a data frame description
 #' @param ... currently ignored
+#' @importFrom dplyr filter
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom dplyr arrange
+#' @importFrom dplyr mutate
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 scale_fill_brewer
+#' @importFrom ggplot2 coord_polar
+#' @importFrom ggplot2 theme_void
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 geom_text
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 aes
 #' @export
 #' @examples
 #' boa_data <- read_boa(read_example("boa_example_data.csv"))
 #' generate_pie(boa_data)
 
 generate_pie <- function(data, ...) {
+  # Filter data and group it
   pie_table <- data |>
+    dplyr::filter(Status == "Expenditure") |>
     dplyr::group_by(Category) |>
     dplyr::summarize(sum(Amount))
   colnames(pie_table) <- c("pie", "total")
   pie_table$total <- abs(pie_table$total)
 
-  slice <- pie_table$total
-  lbl <- pie_table$pie
-  colors <- RColorBrewer::brewer.pal(n = length(slice), name = "Set3")
+  # Compute the Proportions and position of the labels
+  pie_prop <- pie_table |>
+    dplyr::arrange(desc(pie)) |>
+    dplyr::mutate(prop = total / sum(pie_table$total) *100) %>%
+    dplyr::mutate(ypos = cumsum(prop)- 0.5*prop )
 
-  graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9, ...)
+  # Create pie chart
+  ggplot2::ggplot(pie_prop, aes(x="", y=prop, fill=pie)) +
+    ggplot2::geom_bar(stat="identity", width=1, color="white") +
+    ggplot2::coord_polar("y", start= 0) +
+    ggplot2::theme_void() +
+    ggplot2::theme(legend.position="none") +
+    ggplot2::geom_text(aes(y = ypos, label = pie), color = "black", size = 3.5) +
+    ggplot2::scale_fill_brewer(palette="Set3") +
+    ggplot2::labs(title = "Total Expenditure")
 }
-
 
