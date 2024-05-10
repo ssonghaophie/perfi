@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/ssonghaophie/perfi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ssonghaophie/perfi/actions/workflows/R-CMD-check.yaml)
-[![CRAN status](https://www.r-pkg.org/badges/version/perfi)](https://CRAN.R-project.org/package=perfi)
+[![Codecov test coverage](https://codecov.io/gh/ssonghaophie/perfi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ssonghaophie/perfi?branch=main)
+
 <!-- badges: end -->
 
 ### Overview
@@ -71,7 +72,7 @@ usb_data <- read_example("usbs_example_data.csv")
 
 # read_boa()
 boa <- read_boa(boa_data)
-read_boa(boa_data2)
+boa2 <- read_boa(boa_data2)
 
 # read_USBank()
 usb <- read_USBank(usb_data)
