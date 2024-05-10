@@ -258,5 +258,3 @@ generate_pie <- function(data, ...) {
 
   graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9, ...)
 }
-
-
