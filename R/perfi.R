@@ -18,8 +18,6 @@ read_example <- function(file = NULL) {
   }
 }
 
-?read.csv
-
 #' @title Reading transaction spreadsheet of Bank of American Accounts
 #' @description This function reads transaction data from Bank of America accounts stored in a CSV file. It removes unnecessary
 #' rows and columns, converts the date column to the Date format, categorizes transactions into expenditure or deposit, and assigns categories based on
@@ -50,30 +48,29 @@ read_boa <- function(file, ...) {
   # create categories
   data <- data |>
     dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
-    dplyr::select(-Description) |>
-    dplyr::rename(Description = Desc) |>
     dplyr::mutate(Category =
                     #Transaction
-                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM", Description, ignore.case = TRUE), "Transaction",
+                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM|DEPOSIT", Desc, ignore.case = TRUE), "Transaction",
                     # Pharmacy
-                    ifelse(grepl("CVS", Description, ignore.case = TRUE), "Pharmacy",
+                    ifelse(grepl("CVS", Desc, ignore.case = TRUE), "Pharmacy",
                     # Grocery
-                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S", Description, ignore.case = TRUE), "Grocery",
+                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S|H MART", Desc, ignore.case = TRUE), "Grocery",
                     # Food
-                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO", Description, ignore.case = TRUE), "Food",
+                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO|FOOD|MCDONALD'S", Desc, ignore.case = TRUE), "Food",
                     # Drink and Desserts
-                    ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE", Description, ignore.case = TRUE), "Drink and Dessert",
+                    ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE|CAFE", Desc, ignore.case = TRUE), "Drink and Dessert",
                     # Transportation
-                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Description, ignore.case = TRUE), "Transportation",
+                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Desc, ignore.case = TRUE), "Transportation",
                     # Clothes
-                    ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", Description, ignore.case = TRUE), "Clothes",
+                    ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", Desc, ignore.case = TRUE), "Clothes",
                     # Entertainment
-                    ifelse(grepl("CINEMARK THEATRES|SPOTIFY", Description, ignore.case = TRUE), "Entertainment",
+                    ifelse(grepl("CINEMARK THEATRES|SPOTIFY", Desc, ignore.case = TRUE), "Entertainment",
                     # Shopping
-                    ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM", Description, ignore.case = TRUE), "Shopping",
+                    ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM|GAMESTOP|TARGET", Description, ignore.case = TRUE), "Shopping",
                     # Miscellaneous
                     "Misc."
-                     ))))))))))
+                     )))))))))) |>
+    dplyr::select(-Desc)
   return(data)
 }
 
