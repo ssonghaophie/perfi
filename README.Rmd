@@ -56,6 +56,7 @@ Functions inside the package:
 - `read_USBank`: Reads, cleans, categorizes, and assigns categories to US Bank transaction data from a specified URL.
 - `generate_pie`: Creates a pie chart illustrating expenditure distribution by category based on transaction data.
 
+
 ### Package Usage Examples
 
 Load perfi R package. 
