@@ -151,6 +151,31 @@ summary_stats <- function(data, ...) {
   return(total)
 }
 
+#' @title Returning income budgeted for user
+#' @description This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
+#' needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
+#' @param income a numeric input from the user that represents their income
+#' @param needs_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to needs, default setting is 0.5
+#' @param wants_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to wants, default setting is 0.3
+#' @param savings_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to savings, default setting is 0.3
+#' @param freq the frequency of income that user inputs, default setting is bi-weekly
+#' @export
+#' @examples
+#' budget_income(1000)
+#' budget_income(1000, freq = "weekly")
+
+budget_income <- function(income, needs_percent = .5, wants_percent = .3, savings_percent = .2,  freq = "bi-weekly"){
+  if (freq == "weekly"){
+    income <- income *2
+  }
+  needs <- income * needs_percent
+  wants <- income * wants_percent
+  savings <- income * savings_percent
+
+  budget <- list(needs = needs, wants = wants, savings = savings)
+  return(budget)
+}
+
 #' @title Calculating average spending (by day and week) and visualizing weekly spending
 #' @description This function calculates the average spending per day and per week based on the provided transaction data. It then visualizes the weekly
 #' spending along with the average spending trend over time.
@@ -205,31 +230,6 @@ avg_spend <- function(data, ...) {
          y = "Spending",
          fill = "Week")
   return(plot)
-}
-
-#' @title Returning income budgeted for user
-#' @description This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
-#' needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
-#' @param income a numeric input from the user that represents their income
-#' @param needs_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to needs, default setting is 0.5
-#' @param wants_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to wants, default setting is 0.3
-#' @param savings_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to savings, default setting is 0.3
-#' @param freq the frequency of income that user inputs, default setting is bi-weekly
-#' @export
-#' @examples
-#' budget_income(1000)
-#' budget_income(1000, freq = "weekly")
-
-budget_income <- function(income, needs_percent = .5, wants_percent = .3, savings_percent = .2,  freq = "bi-weekly"){
-  if (freq == "weekly"){
-    income <- income *2
-  }
-  needs <- income * needs_percent
-  wants <- income * wants_percent
-  savings <- income * savings_percent
-
-  budget <- list(needs = needs, wants = wants, savings = savings)
-  return(budget)
 }
 
 #' @title Creating a pie chart for imported transaction sheet
