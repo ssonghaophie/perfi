@@ -6,6 +6,15 @@
 \usage{
 generate_pie(data, ...)
 }
+\arguments{
+\item{data}{imported transaction sheet, should be stored as a data frame description}
+
+\item{...}{currently ignored}
+}
 \description{
 This function visualizes user's expenditure by category by creating a pie chart
+}
+\examples{
+boa_data <- read_boa(read_example("boa_example_data.csv"))
+generate_pie(boa_data)
 }

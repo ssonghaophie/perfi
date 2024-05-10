@@ -8,6 +8,8 @@ read_boa(file, ...)
 }
 \arguments{
 \item{file}{Name of the CSV file. It can be an absolute path, relative path, or a complete URL of the data file.}
+
+\item{...}{currently ignored}
 }
 \value{
 Dataframe of a transaction data

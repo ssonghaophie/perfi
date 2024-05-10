@@ -23,12 +23,12 @@ read_example <- function(file = NULL) {
 #' rows and columns, converts the date column to the Date format, categorizes transactions into expenditure or deposit, and assigns categories based on
 #' transaction descriptions.
 #' @param file Name of the CSV file. It can be an absolute path, relative path, or a complete URL of the data file.
+#' @param ... currently ignored
 #' @return Dataframe of a transaction data
 #' @importFrom utils read.csv
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
 #' @importFrom dplyr rename
-#'
 #' @export
 #' @examples
 #' boa_data <- read_example("boa_example_data.csv")
@@ -81,6 +81,8 @@ read_boa <- function(file, ...) {
 #' categorizing transactions into different categories, and creating a column for expenditure and deposit based on transaction amounts.
 #' @importFrom utils read.csv
 #' @importFrom dplyr mutate
+#' @param file Name of the CSV file. It can be an absolute path, relative path, or a complete URL of the data file.
+#' @param ... currently ignored
 #' @export
 #' @examples
 #' usb_data <- read_example("usbs_example_data.csv")
@@ -135,6 +137,8 @@ read_USBank <- function(file, ...) {
 #' grouped by transaction status (expenditure or deposit) and returns a summary table.
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarize
+#' @param data imported transaction sheet, should be stored as a data frame
+#' @param ... currently ignored
 #' @export
 #' @examples
 #' boa_data <- read_boa(read_example("boa_example_data.csv"))
@@ -143,8 +147,7 @@ read_USBank <- function(file, ...) {
 summary_stats <- function(data, ...) {
   total <- data |>
     dplyr::group_by(Status) |>
-    dplyr::summarize(sum(Amount))
-  colnames(total) <- c("Status", "Total")
+    dplyr::summarize(Total = sum(Amount))
   return(total)
 }
 
@@ -162,6 +165,8 @@ summary_stats <- function(data, ...) {
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 aes
+#' @param data imported transaction sheet, should be stored as a data frame description
+#' @param ... currently ignored
 #' @export
 #' @examples
 #' boa_data <- read_boa(read_example("boa_example_data.csv"))
@@ -205,6 +210,11 @@ avg_spend <- function(data, ...) {
 #' @title Returning income budgeted for user
 #' @description This function calculates and returns a budget for the user based on their income and specified percentages they want allocated for their
 #' needs, wants, and savings. The budget can be calculated for different income frequencies such as weekly or bi-weekly.
+#' @param income a numeric input from the user that represents their income
+#' @param needs_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to needs, default setting is 0.5
+#' @param wants_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to wants, default setting is 0.3
+#' @param savings_percent a numeric input that ranges from 0 to 1, indicating the portion of their income that user would like to allocate to savings, default setting is 0.3
+#' @param freq the frequency of income that user inputs, default setting is bi-weekly
 #' @export
 #' @examples
 #' budget_income(1000)
@@ -228,6 +238,8 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
 #' @importFrom dplyr summarize
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom graphics pie
+#' @param data imported transaction sheet, should be stored as a data frame description
+#' @param ... currently ignored
 #' @export
 #' @examples
 #' boa_data <- read_boa(read_example("boa_example_data.csv"))

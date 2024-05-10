@@ -6,7 +6,16 @@
 \usage{
 avg_spend(data, ...)
 }
+\arguments{
+\item{data}{imported transaction sheet, should be stored as a data frame description}
+
+\item{...}{currently ignored}
+}
 \description{
 This function calculates the average spending per day and per week based on the provided transaction data. It then visualizes the weekly
 spending along with the average spending trend over time.
+}
+\examples{
+boa_data <- read_boa(read_example("boa_example_data.csv"))
+avg_spend(boa_data)
 }
