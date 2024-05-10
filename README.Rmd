@@ -48,13 +48,13 @@ devtools::install_github("ssonghaophie/perfi")
 ### Functions Included
 
 Functions inside the package:
-- `read_example`: Retrieves file paths for example transaction data files in the "perfi" package's directory.
-- `read_boa`: Reads, cleans, categorizes, and assigns categories to Bank of America transaction data.
-- `summary_stats`: Generates summary tables of personal finance statistics, calculating totals grouped by transaction status.
-- `avg_spend`: Calculates average daily and weekly spending from transaction data and visualizes weekly spending trends.
-- `budget_income`: Calculates budget allocations for needs, wants, and savings based on user income and preferences.
-- `read_USBank`: Reads, cleans, categorizes, and assigns categories to US Bank transaction data from a specified URL.
-- `generate_pie`: Creates a pie chart illustrating expenditure distribution by category based on transaction data.
+-`read_example`: Retrieves file paths for example transaction data files in the "perfi" package's directory.
+-`read_boa`: Reads, cleans, categorizes, and assigns categories to Bank of America transaction data.
+-`summary_stats`: Generates summary tables of personal finance statistics, calculating totals grouped by transaction status.
+-`avg_spend`: Calculates average daily and weekly spending from transaction data and visualizes weekly spending trends.
+-`budget_income`: Calculates budget allocations for needs, wants, and savings based on user income and preferences.
+-`read_USBank`: Reads, cleans, categorizes, and assigns categories to US Bank transaction data from a specified URL.
+-`generate_pie`: Creates a pie chart illustrating expenditure distribution by category based on transaction data.
 
 
 ### Package Usage Examples

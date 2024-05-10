@@ -46,19 +46,19 @@ devtools::install_github("ssonghaophie/perfi")
 #> tidyselect (1.2.0 -> 1.2.1) [CRAN]
 #> ggplot2    (3.4.4 -> 3.5.1) [CRAN]
 #> Installing 4 packages: munsell, gtable, tidyselect, ggplot2
-#> Installing packages into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/RtmpzRm3Sf/temp_libpathe0c74666883'
+#> Installing packages into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/RtmpzRm3Sf/temp_libpathe0c1065a1ef'
 #> (as 'lib' is unspecified)
 #> 
 #> The downloaded binary packages are in
-#>  /var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T//Rtmpch7E6Z/downloaded_packages
+#>  /var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T//RtmpBDZrEn/downloaded_packages
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/Rtmpch7E6Z/remotes13aed65af9/ssonghaophie-perfi-762cf76/DESCRIPTION’ ... OK
+#> * checking for file ‘/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/RtmpBDZrEn/remotes14ab4890aa7a/ssonghaophie-perfi-52b5833/DESCRIPTION’ ... OK
 #> * preparing ‘perfi’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
 #> * building ‘perfi_0.0.0.9000.tar.gz’
-#> Installing package into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/RtmpzRm3Sf/temp_libpathe0c74666883'
+#> Installing package into '/private/var/folders/rd/9w0kch9d007c_h3yj9pn0xlr0000gn/T/RtmpzRm3Sf/temp_libpathe0c1065a1ef'
 #> (as 'lib' is unspecified)
 ```
 
@@ -73,17 +73,17 @@ devtools::install_github("ssonghaophie/perfi")
 
 ### Functions Included
 
-Functions inside the package: - `read_example`: Retrieves file paths for
-example transaction data files in the “perfi” package’s directory. -
-`read_boa`: Reads, cleans, categorizes, and assigns categories to Bank
-of America transaction data. - `summary_stats`: Generates summary tables
+Functions inside the package: -`read_example`: Retrieves file paths for
+example transaction data files in the “perfi” package’s directory.
+-`read_boa`: Reads, cleans, categorizes, and assigns categories to Bank
+of America transaction data. -`summary_stats`: Generates summary tables
 of personal finance statistics, calculating totals grouped by
-transaction status. - `avg_spend`: Calculates average daily and weekly
-spending from transaction data and visualizes weekly spending trends. -
-`budget_income`: Calculates budget allocations for needs, wants, and
-savings based on user income and preferences. - `read_USBank`: Reads,
+transaction status. -`avg_spend`: Calculates average daily and weekly
+spending from transaction data and visualizes weekly spending trends.
+-`budget_income`: Calculates budget allocations for needs, wants, and
+savings based on user income and preferences. -`read_USBank`: Reads,
 cleans, categorizes, and assigns categories to US Bank transaction data
-from a specified URL. - `generate_pie`: Creates a pie chart illustrating
+from a specified URL. -`generate_pie`: Creates a pie chart illustrating
 expenditure distribution by category based on transaction data.
 
 ### Package Usage Examples
