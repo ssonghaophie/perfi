@@ -146,7 +146,7 @@ read_USBank <- function(file, ...) {
 
 summary_stats <- function(data, ...) {
   total <- data |>
-    dplyr::group_by(tatus) |>
+    dplyr::group_by(Status) |>
     dplyr::summarize(Total = sum(Amount))
   return(total)
 }

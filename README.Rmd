@@ -67,25 +67,26 @@ library(perfi)
 # read_example()
 boa_data <- read_example("boa_example_data.csv")
 boa_data2 <- read_example("boa_example_data2.csv")
+usb_data <- read_example("usbs_example_data.csv")
 
 # read_boa()
-read_boa(boa_data)
+boa <- read_boa(boa_data)
 read_boa(boa_data2)
 
 # read_USBank()
-read_USBank(usb_data)
+usb <- read_USBank(usb_data)
 
 # summary_stats()
-summary_stats(boa_data)
+summary_stats(boa)
 
 # avg_spend()
-avg_spend(boa_data)
+avg_spend(boa)
 
 # budget_income()
 budget_income(1000, freq = "weekly")
 
 # generate_pie()
-generate_pie(boa_data)
+generate_pie(boa)
 ```
 
 ## Contributors
