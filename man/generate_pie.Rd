@@ -7,5 +7,5 @@
 generate_pie(data, ...)
 }
 \description{
-Creating a pie chart for imported transaction sheet
+This function visualizes user's expenditure by category by creating a pie chart
 }

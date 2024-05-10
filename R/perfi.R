@@ -210,7 +210,7 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
 }
 
 #' @title Creating a pie chart for imported transaction sheet
-#' @description
+#' @description This function visualizes user's expenditure by category by creating a pie chart
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarize
 #' @importFrom RColorBrewer brewer.pal
