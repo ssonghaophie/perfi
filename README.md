@@ -40,16 +40,8 @@ You can install the development version of perfi from
 ``` r
 # install.packages("devtools")
 devtools::install_github("ssonghaophie/perfi")
-#> Downloading GitHub repo ssonghaophie/perfi@HEAD
-#> ── R CMD build ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/0j/_zd6vh3j60q6c73fmw7nh_4r0000gn/T/RtmpQHWvx9/remotesbf1f68336c19/ssonghaophie-perfi-6418c8e/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/0j/_zd6vh3j60q6c73fmw7nh_4r0000gn/T/RtmpQHWvx9/remotesbf1f68336c19/ssonghaophie-perfi-6418c8e/DESCRIPTION’
-#>   ─  preparing ‘perfi’:
-#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-#>   ─  checking for LF line-endings in source and make files and shell scripts
-#>   ─  checking for empty or unneeded directories
-#>   ─  building ‘perfi_0.0.0.9000.tar.gz’
-#>      
-#> 
+#> Skipping install of 'perfi' from a github remote, the SHA1 (6418c8e8) has not changed since last install.
+#>   Use `force = TRUE` to force installation
 ```
 
 ### Datasets Included
