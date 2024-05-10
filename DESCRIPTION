@@ -17,8 +17,7 @@ Imports:
     dplyr,
     ggplot2,
     utils,
-    graphics,
-    RColorBrewer
+    graphics
 Suggests: 
     knitr,
     rmarkdown,

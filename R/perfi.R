@@ -45,29 +45,29 @@ read_boa <- function(file, ...) {
   data$Date <- as.Date(data$Date, "%m/%d/%y")
   # create a column for expenditure, deposit
   data <- data |>
-    dplyr::mutate(Status = ifelse(Amount < 0, "Expenditure", "Deposit"))
+    dplyr::mutate(Status = ifelse(data$Amount < 0, "Expenditure", "Deposit"))
   # create categories
   data <- data |>
-    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", Description, ignore.case = TRUE)) |>
+    dplyr::mutate(Desc = gsub(" \\d{2}/\\d{2}.*", "", data$Description, ignore.case = TRUE)) |>
     dplyr::mutate(Category =
                     #Transaction
-                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM|DEPOSIT", Desc, ignore.case = TRUE), "Transaction",
+                    ifelse(grepl("Zelle|Online Banking transfer|PAYROLL|ATM|DEPOSIT", data$Desc, ignore.case = TRUE), "Transaction",
                     # Pharmacy
-                    ifelse(grepl("CVS", Desc, ignore.case = TRUE), "Pharmacy",
+                    ifelse(grepl("CVS", data$Desc, ignore.case = TRUE), "Pharmacy",
                     # Grocery
-                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S|H MART", Desc, ignore.case = TRUE), "Grocery",
+                    ifelse(grepl("INSTACART|WEEE|WAL-MART|7-ELEVEN|TRADER JOE S|H MART", data$Desc, ignore.case = TRUE), "Grocery",
                     # Food
-                    ifelse(grepl("\\*EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO|FOOD|MCDONALD'S", Desc, ignore.case = TRUE), "Food",
+                    ifelse(grepl("EATS|GRUBHUB|Doordash|CHIPOTLE|T. Roots|Noodles|Oriental Taste|MEXCALITO NOHO|FOOD|MCDONALD'S", data$Desc, ignore.case = TRUE), "Food",
                     # Drink and Desserts
-                    ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE|CAFE", Desc, ignore.case = TRUE), "Drink and Dessert",
+                    ifelse(grepl("WOODSTAR|MOCHINUT|HUI LAO SHAN|MOCHA EMPORIUM|THE ROOST|COFFEE|CAFE", data$Desc, ignore.case = TRUE), "Drink and Dessert",
                     # Transportation
-                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", Desc, ignore.case = TRUE), "Transportation",
+                    ifelse(grepl("Zipcar|UBER|LYFT|PVTA|NJT", data$Desc, ignore.case = TRUE), "Transportation",
                     # Clothes
-                    ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", Desc, ignore.case = TRUE), "Clothes",
+                    ifelse(grepl("URBAN OUTFITTRS|NIKE|American Eagle|FOREVER21|ALTAR'D STATE", data$Desc, ignore.case = TRUE), "Clothes",
                     # Entertainment
-                    ifelse(grepl("CINEMARK THEATRES|SPOTIFY", Desc, ignore.case = TRUE), "Entertainment",
+                    ifelse(grepl("CINEMARK THEATRES|SPOTIFY", data$Desc, ignore.case = TRUE), "Entertainment",
                     # Shopping
-                    ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM|GAMESTOP|TARGET", Description, ignore.case = TRUE), "Shopping",
+                    ifelse(grepl("THE VAULT|PAISABOYS|BLUE BOTTLE COFFEE|BARNES & NOBLE|PIER PROVISIONS|BOOKSHOP|ZUMIEZ|APPLE.COM|GAMESTOP|TARGET", data$Desc, ignore.case = TRUE), "Shopping",
                     # Miscellaneous
                     "Misc."
                      )))))))))) |>
@@ -234,27 +234,51 @@ budget_income <- function(income, needs_percent = .5, wants_percent = .3, saving
 
 #' @title Creating a pie chart for imported transaction sheet
 #' @description This function visualizes user's expenditure by category by creating a pie chart
-#' @importFrom dplyr group_by
-#' @importFrom dplyr summarize
-#' @importFrom RColorBrewer brewer.pal
-#' @importFrom graphics pie
 #' @param data imported transaction sheet, should be stored as a data frame description
 #' @param ... currently ignored
+#' @importFrom dplyr filter
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom dplyr arrange
+#' @importFrom dplyr mutate
+#' @importFrom dplyr desc
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 scale_fill_brewer
+#' @importFrom ggplot2 coord_polar
+#' @importFrom ggplot2 theme_void
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 geom_text
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 aes
+#' @importFrom graphics pie
 #' @export
 #' @examples
 #' boa_data <- read_boa(read_example("boa_example_data.csv"))
 #' generate_pie(boa_data)
 
 generate_pie <- function(data, ...) {
+  # Filter data and group it
   pie_table <- data |>
+    dplyr::filter(Status == "Expenditure") |>
     dplyr::group_by(Category) |>
     dplyr::summarize(sum(Amount))
   colnames(pie_table) <- c("pie", "total")
   pie_table$total <- abs(pie_table$total)
 
-  slice <- pie_table$total
-  lbl <- pie_table$pie
-  colors <- RColorBrewer::brewer.pal(n = length(slice), name = "Set3")
+  # Compute the Proportions and position of the labels
+  pie_prop <- pie_table |>
+    dplyr::arrange(dplyr::desc(pie)) |>
+    dplyr::mutate(prop = total / sum(pie_table$total) *100) |>
+    dplyr::mutate(ypos = cumsum(prop)- 0.5*prop)
 
-  graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9, ...)
+  # Create pie chart
+  ggplot2::ggplot(pie_prop, aes(x="", y=prop, fill=pie)) +
+    ggplot2::geom_bar(stat="identity", width=1, color="white") +
+    ggplot2::coord_polar("y", start= 0) +
+    ggplot2::theme_void() +
+    ggplot2::theme(legend.position="none") +
+    ggplot2::geom_text(aes(y = ypos, label = pie), color = "black", size = 3.5) +
+    ggplot2::scale_fill_brewer(palette="Set3") +
+    ggplot2::labs(title = "Total Expenditure by Category")
 }
