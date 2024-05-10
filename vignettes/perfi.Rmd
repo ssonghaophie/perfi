@@ -74,6 +74,6 @@ budget_income(1000, needs_percent = 0.4, wants_percent = 0.3, savings_percent = 
 The `perfi` package also enables users to visualize their expenditure by category. Users can generate a pie chart of this kind using the `generate_pie()` function.
 
 ```{r,fig.width=5, fig.height=4}
-generate_pie(user_data, cex = .5)
+generate_pie(user_data)
 ```
 

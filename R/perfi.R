@@ -31,8 +31,9 @@ read_example <- function(file = NULL) {
 #'
 #' @export
 #' @examples
+#' boa_data <- read_example("boa_example_data.csv")
 #' read_boa(boa_data)
-#' read_boa("boa_example_data.csv")
+#' read_boa(read_example("boa_example_data2.csv"))
 
 # read boa transaction data
 read_boa <- function(file, ...) {

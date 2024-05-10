@@ -18,6 +18,7 @@ rows and columns, converts the date column to the Date format, categorizes trans
 transaction descriptions.
 }
 \examples{
+boa_data <- read_example("boa_example_data.csv")
 read_boa(boa_data)
-read_boa("boa_example_data.csv")
+read_boa(read_example("boa_example_data2.csv"))
 }
