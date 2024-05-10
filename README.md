@@ -40,8 +40,16 @@ You can install the development version of perfi from
 ``` r
 # install.packages("devtools")
 devtools::install_github("ssonghaophie/perfi")
-#> Skipping install of 'perfi' from a github remote, the SHA1 (9c9d0f54) has not changed since last install.
-#>   Use `force = TRUE` to force installation
+#> Downloading GitHub repo ssonghaophie/perfi@HEAD
+#> ── R CMD build ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/0j/_zd6vh3j60q6c73fmw7nh_4r0000gn/T/RtmpQHWvx9/remotesbf1f68336c19/ssonghaophie-perfi-6418c8e/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/0j/_zd6vh3j60q6c73fmw7nh_4r0000gn/T/RtmpQHWvx9/remotesbf1f68336c19/ssonghaophie-perfi-6418c8e/DESCRIPTION’
+#>   ─  preparing ‘perfi’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘perfi_0.0.0.9000.tar.gz’
+#>      
+#> 
 ```
 
 ### Datasets Included
@@ -131,10 +139,10 @@ usb <- read_USBank(usb_data)
 # summary_stats()
 summary_stats(boa)
 #> # A tibble: 2 × 2
-#>   `data$Status`  Total
-#>   <chr>          <dbl>
-#> 1 Deposit        1200.
-#> 2 Expenditure   -1379.
+#>   Status       Total
+#>   <chr>        <dbl>
+#> 1 Deposit      1200.
+#> 2 Expenditure -1379.
 
 # avg_spend()
 avg_spend(boa)
