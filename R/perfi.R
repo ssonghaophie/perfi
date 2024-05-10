@@ -267,8 +267,8 @@ generate_pie <- function(data, ...) {
   # Compute the Proportions and position of the labels
   pie_prop <- pie_table |>
     dplyr::arrange(desc(pie)) |>
-    dplyr::mutate(prop = total / sum(pie_table$total) *100) %>%
-    dplyr::mutate(ypos = cumsum(prop)- 0.5*prop )
+    dplyr::mutate(prop = total / sum(pie_table$total) *100) |>
+    dplyr::mutate(ypos = cumsum(prop)- 0.5*prop)
 
   # Create pie chart
   ggplot2::ggplot(pie_prop, aes(x="", y=prop, fill=pie)) +
@@ -278,6 +278,6 @@ generate_pie <- function(data, ...) {
     ggplot2::theme(legend.position="none") +
     ggplot2::geom_text(aes(y = ypos, label = pie), color = "black", size = 3.5) +
     ggplot2::scale_fill_brewer(palette="Set3") +
-    ggplot2::labs(title = "Total Expenditure")
+    ggplot2::labs(title = "Total Expenditure by Category")
 }
 

@@ -37,6 +37,8 @@ test_that("transaction data output have the correct structure", {
 
 # test for summary_stats
 
+boa1 <- read_boa(boa1_path)
+
 test_that("summary stats output have the correct structure", {
   # summary stats should have 2 columns
   expect_length(summary_stats(boa1), 2)
@@ -64,6 +66,7 @@ test_that("sum of the budget is equal to the income", {
 
 # test for avg_spend
 
+boa1 <- read_boa(boa1_path)
 plot <- avg_spend(boa1)
 # store labels and title
 plot_labels <- c(
@@ -101,7 +104,43 @@ test_that("plot aesthetics are correctly mapped", {
 
 # test for generate_pie
 
+boa1 <- read_boa(boa1_path)
 pie <- generate_pie(boa1)
 
+# store labels and title
+pie_labels <- c(
+  xlab = pie$labels$x,
+  ylab = pie$labels$y,
+  fill = pie$labels$fill,
+  title = pie$labels$title,
+  label = pie$labels$label
+)
+# define expected labels and titles
+expected_labels <- c(
+  xlab = "x",
+  ylab = "prop",
+  fill = "pie",
+  title = "Total Expenditure by Category",
+  label = "pie"
+)
+# extract aesthetics mappings from the plot data
+pie_mappings <- colnames(pie$data)
+# define expected aesthetics mappings
+expected_mappings <- list(
+  pie = "pie",
+  total = "total",
+  prop = "prop",
+  ypos = "ypos"
+)
 
+test_that("avg_spend plot has correct labels", {
+  expect_equal(pie_labels, expected_labels)
+})
 
+test_that("plot aesthetics are correctly mapped", {
+  expect_equal(pie_mappings[1], expected_mappings$pie)
+  expect_equal(pie_mappings[2], expected_mappings$total)
+  expect_equal(pie_mappings[3], expected_mappings$prop)
+  expect_equal(pie_mappings[4], expected_mappings$ypos)
+
+})
