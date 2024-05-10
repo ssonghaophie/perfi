@@ -31,8 +31,9 @@ read_example <- function(file = NULL) {
 #'
 #' @export
 #' @examples
+#' boa_data <- read_example("boa_example_data.csv")
 #' read_boa(boa_data)
-#' read_boa("boa_example_data.csv")
+#' read_boa(read_example("boa_example_data2.csv"))
 
 # read boa transaction data
 read_boa <- function(file, ...) {
@@ -228,7 +229,7 @@ generate_pie <- function(data, ...) {
   lbl <- pie_table$pie
   colors <- RColorBrewer::brewer.pal(n = length(slice), name = "Set3")
 
-  graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9)
+  graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9, ...)
 }
 
 
