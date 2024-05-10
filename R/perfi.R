@@ -228,7 +228,7 @@ generate_pie <- function(data, ...) {
   lbl <- pie_table$pie
   colors <- RColorBrewer::brewer.pal(n = length(slice), name = "Set3")
 
-  graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9)
+  graphics::pie(slice, labels = lbl, main = "Expenditure by Category", col = colors, cex = 0.9, ...)
 }
 
 
