@@ -2,7 +2,7 @@
 % Please edit documentation in R/perfi.R
 \name{budget_income}
 \alias{budget_income}
-\title{Returns income budgeted for user}
+\title{Returning income budgeted for user}
 \usage{
 budget_income(
   income,

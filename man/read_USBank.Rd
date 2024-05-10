@@ -4,10 +4,10 @@
 \alias{read_USBank}
 \title{Reading transaction spreadsheet of US Bank Accounts}
 \usage{
-read_USBank(data_url, ...)
+read_USBank(file, ...)
 }
 \description{
-This function reads transaction data from US Bank accounts stored in a CSV file located at the specified URL. It performs necessary data
+This function reads transaction data from US Bank accounts stored in a CSV file. It performs necessary data
 manipulation steps such as dropping unnecessary rows or columns, converting the date column to the Date format, extracting descriptions from transaction names,
 categorizing transactions into different categories, and creating a column for expenditure and deposit based on transaction amounts.
 }
