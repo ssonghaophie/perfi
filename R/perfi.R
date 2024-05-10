@@ -137,6 +137,7 @@ read_USBank <- function(file, ...) {
 #' grouped by transaction status (expenditure or deposit) and returns a summary table.
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarize
+#' @importFrom rlang .data
 #' @param data imported transaction sheet, should be stored as a data frame
 #' @param ... currently ignored
 #' @export
@@ -146,8 +147,8 @@ read_USBank <- function(file, ...) {
 
 summary_stats <- function(data, ...) {
   total <- data |>
-    dplyr::group_by(Status) |>
-    dplyr::summarize(Total = sum(Amount))
+    dplyr::group_by(rlang::.data$Status) |>
+    dplyr::summarize(Total = sum(rlang::.data$Amount))
   return(total)
 }
 
